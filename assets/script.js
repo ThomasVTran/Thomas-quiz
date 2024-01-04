@@ -43,7 +43,7 @@ var questions = [
     }
 ]
 
-var questionsArray = 0
+var arrayPosition = 0
 
 startButton.addEventListener("click", function(){
     section.innerHTML = ("");
@@ -51,18 +51,38 @@ startButton.addEventListener("click", function(){
     qfunction();
 })
 
-console.log(function qfunction() {
+function qfunction() {
+    section.innerHTML = ("");
     var divEl = document.createElement("div");
     var ulEl = document.createElement("ul");
-    divEl.textContent = questions[questionsArray].text;
+    divEl.textContent = questions[arrayPosition].text;
     ulEl.setAttribute("class","answers");
-    document.getElementById("#section-container").appendChild(divEl);
-})
+    document.getElementById("section-container").appendChild(divEl);
+    for (let i = 0; i < questions[arrayPosition].choices.length; i++) {
+        var answerChoices = document.createElement("button");
+        answerChoices.textContent = questions[arrayPosition].choices[i];
+        ulEl.appendChild(answerChoices)
+    }
+    document.getElementById("section-container").appendChild(ulEl)
+    ulEl.addEventListener("click", function(event){
+        if (event.target.matches("button")) {
+            arrayPosition++
+            qfunction()
+       
+        }   
+        // else {
+        //     questions[arrayPosition].text >
+        // }
+        // if (event.target.textContent === !(questions[arrayPosition].correctAnswers)) {
+        //     minusTime()
+        // }
+    })
+}
 
 function minusTime() {
-    timerCount-10000
-    if (timerCount === 0){
-        clearInterval(timerCount)
+    timerDisplay-10000
+    if (timerDisplay === 0){
+        clearInterval(timerDisplay)
     }
 }
 
@@ -73,7 +93,9 @@ function countdown(){
         timerDisplay.textContent = timerCount
         if (timerCount === 0) {
             clearInterval(timeInterval)
-        }        
+        }   else {
+
+        }
     }, 1000);
 }
 
