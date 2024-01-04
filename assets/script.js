@@ -9,43 +9,43 @@
 // THEN the game is over
 // WHEN the game is over
 // THEN I can save my initials and my score
-var timerDisplay = document.querySelector ("#timer")
-var startButton = document.querySelector ("#start-button")
-var highScores = document.querySelector ("#high-scores")
-var section = document.querySelector ("#section-container")
-
+var timerDisplay = document.querySelector("#timer")
+var startButton = document.querySelector("#start-button")
+var highScores = document.querySelector("#high-scores")
+var section = document.querySelector("#section-container")
+var timerCount = 50;
 
 var questions = [
     {
         text: "What is my favorite sport to watch?",
-        choices: ["Lacrosse","Football","Volleyball", "Basketball"],
+        choices: ["Lacrosse", "Football", "Volleyball", "Basketball"],
         correctAnswers: "Lacrosse"
     },
     {
         text: "Which sport is my favoite to play?",
-        choices: ["Lacrosse","Football","Volleyball", "Basketball"],
+        choices: ["Lacrosse", "Football", "Volleyball", "Basketball"],
         correctAnswers: "Volleyball"
     },
     {
         text: "What is my favorite means of travel?",
-        choices: ["Boat","Car","Plane","Bike"],
+        choices: ["Boat", "Car", "Plane", "Bike"],
         correctAnswers: "Plane"
     },
     {
         text: "I have how many fingers?",
-        choices: ["2","10","11","9"],
+        choices: ["2", "10", "11", "9"],
         correctAnswers: "10"
     },
     {
         text: "How much money have I given to Riot games?",
-        choices: ["25","50","100","Too much to mention"],
+        choices: ["25", "50", "100", "Too much to mention"],
         correctAnswers: "Too much to mention"
     }
 ]
 
 var arrayPosition = 0
 
-startButton.addEventListener("click", function(){
+startButton.addEventListener("click", function () {
     section.innerHTML = ("");
     countdown();
     qfunction();
@@ -56,7 +56,7 @@ function qfunction() {
     var divEl = document.createElement("div");
     var ulEl = document.createElement("ul");
     divEl.textContent = questions[arrayPosition].text;
-    ulEl.setAttribute("class","answers");
+    ulEl.setAttribute("class", "answers");
     document.getElementById("section-container").appendChild(divEl);
     for (let i = 0; i < questions[arrayPosition].choices.length; i++) {
         var answerChoices = document.createElement("button");
@@ -64,37 +64,36 @@ function qfunction() {
         ulEl.appendChild(answerChoices)
     }
     document.getElementById("section-container").appendChild(ulEl)
-    ulEl.addEventListener("click", function(event){
+    ulEl.addEventListener("click", function (event) {
         if (event.target.matches("button")) {
-            arrayPosition++
-            qfunction()
-       
-        }   
-        // else {
-        //     questions[arrayPosition].text >
-        // }
-        // if (event.target.textContent === !(questions[arrayPosition].correctAnswers)) {
-        //     minusTime()
-        // }
+            if (event.target.textContent !== questions[arrayPosition].correctAnswers) {
+                minusTime();
+                arrayPosition++
+                qfunction()
+            } else {
+                arrayPosition++
+                qfunction()
+            }
+        }
     })
 }
 
-function minusTime() {
-    timerDisplay-10000
-    if (timerDisplay === 0){
-        clearInterval(timerDisplay)
-    }
+function scores() {
+    var yourScore = document.createElement()
+    var initials = document.createElement()
 }
 
-function countdown(){
-    var timerCount = 50;
-    var timeInterval= setInterval(function () {
+function minusTime() {
+    timerCount -= 10
+    timerDisplay.textContent = timerCount
+}
+
+function countdown() {
+    var timeInterval = setInterval(function () {
         timerCount--
         timerDisplay.textContent = timerCount
-        if (timerCount === 0) {
+        if (timerCount <= 0 || arrayPosition === 5) {
             clearInterval(timeInterval)
-        }   else {
-
         }
     }, 1000);
 }
